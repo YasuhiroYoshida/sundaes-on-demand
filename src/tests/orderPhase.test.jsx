@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
+import { OrderDetailsProvider } from '../contexts/OrderDetails';
+import OrderEntry from '../pages/entry/OrderEntry';
 
 test('order phase for happy path', async () => {
   /*** OrderEntry page ***/
@@ -147,4 +149,37 @@ test('Toppings header is not on summary page if no toppings have been selected',
     name: /toppings: \$/i,
   });
   expect(toppingsHeading).not.toBeInTheDocument();
+});
+
+test('disable order button for no scoops', async () => {
+  /*** OrderEntry page ***/
+  // No need for the entire app
+  const OrderState = OrderEntry;
+  render(
+    <OrderDetailsProvider>
+      <OrderState setOrderPhase={jest.fn()} />
+    </OrderDetailsProvider>
+  );
+
+  const pageTitle = screen.getByRole('heading', {
+    name: 'Design Your Sundae!',
+  });
+  expect(pageTitle).toBeInTheDocument();
+
+  // make sure order button starts out disabled
+  const button = await screen.findByRole('button');
+  expect(button).toBeDisabled();
+
+  // enter a scoop amount and test if order button has been enabled
+  const vanillaInput = await screen.findByRole('spinbutton', {
+    name: /vanilla/i,
+  });
+  userEvent.clear(vanillaInput);
+  userEvent.type(vanillaInput, '1');
+  expect(button).toBeEnabled();
+
+  // reset the scoop amount and test if order button has been disabled
+  userEvent.clear(vanillaInput);
+  userEvent.type(vanillaInput, '0');
+  expect(button).toBeDisabled();
 });
