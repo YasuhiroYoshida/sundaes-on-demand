@@ -120,9 +120,11 @@ describe('grand total', () => {
 
     expect(grandTotal).toHaveTextContent('9.00');
 
+    userEvent.clear(chocolateInput);
     userEvent.type(chocolateInput, '1');
     expect(grandTotal).toHaveTextContent('7.00');
 
+    userEvent.clear(chocolateInput);
     userEvent.type(chocolateInput, '0');
     expect(grandTotal).toHaveTextContent('5.00');
 
