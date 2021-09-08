@@ -69,10 +69,20 @@ test('order phase for happy path', async () => {
   userEvent.click(confirmOrderBtn);
 
   /*** OrderConfirmation page ***/
-  // confirm order number on confirmation page
-  const thankYou = await screen.findByRole('heading', { name: 'Thank you!' });
+  // expect "Loading..." to show instead of "thank you"
+  let loader = screen.getByText('Loading...');
+  let thankYou = screen.queryByRole('heading', { name: 'Thank you!' });
+  expect(loader).toBeInTheDocument();
+  expect(thankYou).not.toBeInTheDocument();
+
+  thankYou = await screen.findByRole('heading', { name: 'Thank you!' });
   expect(thankYou).toBeInTheDocument();
 
+  // expect that loader has disappeared after "thank you" appeared
+  loader = screen.queryByText('Loading...');
+  expect(loader).not.toBeInTheDocument();
+
+  // confirm order number on confirmation page
   const orderNumber = await screen.findByRole('heading', {
     name: /your order number is: \d{1,10}/i,
   });
@@ -107,4 +117,34 @@ test('order phase for happy path', async () => {
   expect(refreshedGrandTotal).toBeInTheDocument();
 
   // do we need any await anything to avoid test errors?
+});
+
+test('Toppings header is not on summary page if no toppings have been selected', async () => {
+  /*** OrderEntry page ***/
+  // render app
+  render(<App />);
+
+  // add ice cream scoops and toppings
+  const vanillaInput = await screen.findByRole('spinbutton', {
+    name: /vanilla/i,
+  });
+  userEvent.clear(vanillaInput);
+  userEvent.type(vanillaInput, '3');
+
+  // find and click order button
+  const orderButton = screen.getByRole('button', { name: /order sundae/i });
+  userEvent.click(orderButton);
+
+  /*** OrderSummary page ***/
+  // check summary information based on order
+  const summaryHeading = screen.getByRole('heading', { name: 'Order Summary' });
+  expect(summaryHeading).toBeInTheDocument();
+
+  const scoopsHeading = screen.getByRole('heading', { name: 'Scoops: $6.00' });
+  expect(scoopsHeading).toBeInTheDocument();
+
+  const toppingsHeading = screen.queryByRole('heading', {
+    name: /toppings: \$/i,
+  });
+  expect(toppingsHeading).not.toBeInTheDocument();
 });
