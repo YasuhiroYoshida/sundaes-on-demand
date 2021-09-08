@@ -9,10 +9,11 @@ const OrderConfirmation = ({ setOrderPhase }) => {
   const [orderNumber, setOrderNumber] = useState(null);
   const [, , resetOrder] = useOrderDetails();
   const [error, setError] = useState(null);
+
   useEffect(() => {
     setError(null);
     axios
-      .post('http://localhost:3030/orders')
+      .post('http://localhost:3030/order')
       .then((res) => {
         setOrderNumber(res.data.orderNumber);
       })
