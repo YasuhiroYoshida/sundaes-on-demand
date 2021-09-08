@@ -22,7 +22,7 @@ const OrderConfirmation = ({ setOrderPhase }) => {
       });
   }, []); // empty dependency means it will only run once on mount
 
-  if (error) return <AlertBanner message={error} />;
+  if (error) return <AlertBanner message={null} />;
 
   const handleClick = async (event) => {
     resetOrder();
