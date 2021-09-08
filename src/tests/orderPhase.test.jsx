@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 
-test.only('order phase for happy path', async () => {
+test('order phase for happy path', async () => {
   /*** OrderEntry page ***/
   // render app
   render(<App />);

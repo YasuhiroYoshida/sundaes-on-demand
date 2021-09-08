@@ -1,7 +1,7 @@
 const Loader = ({ message }) => {
   return (
     <div>
-      <span>{message ? message : 'Loading...'}</span>
+      <p>{message ? message : 'Loading...'}</p>
     </div>
   );
 };
