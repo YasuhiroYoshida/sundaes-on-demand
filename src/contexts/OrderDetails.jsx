@@ -2,14 +2,6 @@ import { createContext, useContext, useState, useMemo, useEffect } from 'react';
 import pricePerIndex from '../constants';
 import { formatCurrency } from '../utilities';
 
-const calculateSubtotal = (optionType, optionCounts) => {
-  let optionCount = 0;
-  for (const count of optionCounts[optionType].values()) {
-    optionCount += count;
-  }
-  return optionCount * pricePerIndex[optionType];
-};
-
 const OrderDetails = createContext();
 
 export const useOrderDetails = () => {
@@ -54,8 +46,22 @@ export const OrderDetailsProvider = (props) => {
       optionCountsMap.set(itemName, parseInt(itemCount));
       setOptionCounts(newOptionCounts);
     };
-    return [{ ...optionCounts, totals }, updateItemCount]; // first element will be called orderDetails by caller
+    const resetOrder = () => {
+      setOptionCounts({
+        scoops: new Map(),
+        toppings: new Map(),
+      });
+    };
+    return [{ ...optionCounts, totals }, updateItemCount, resetOrder]; // first element will be called orderDetails by caller
   }, [optionCounts, totals]);
 
   return <OrderDetails.Provider value={value} {...props} />;
+};
+
+const calculateSubtotal = (optionType, optionCounts) => {
+  let optionCount = 0;
+  for (const count of optionCounts[optionType].values()) {
+    optionCount += count;
+  }
+  return optionCount * pricePerIndex[optionType];
 };

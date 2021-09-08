@@ -33,6 +33,7 @@ export default function OrderSummary({ setOrderPhase }) {
       <ul>{scoopList}</ul>
       {toppingsDisplay}
       <SummaryForm setOrderPhase={setOrderPhase} />
+      <h2>Total: {orderDetails.totals.grandTotal}</h2>
     </div>
   );
 }
