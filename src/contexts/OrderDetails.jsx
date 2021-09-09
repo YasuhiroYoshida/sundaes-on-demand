@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, useMemo, useEffect } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react';
 import pricePerIndex from '../constants';
 import { formatCurrency } from '../utilities';
 
@@ -39,8 +45,8 @@ export const OrderDetailsProvider = (props) => {
     });
   }, [optionCounts]);
 
-  const value = useMemo(() => {
-    const updateItemCount = (itemName, itemCount, optionType) => {
+  const updateItemCount = useCallback(
+    (itemName, itemCount, optionType) => {
       const { [optionType]: prevOptionMap } = optionCounts;
       const newOptionMap = new Map(prevOptionMap);
       newOptionMap.set(itemName, parseInt(itemCount));
@@ -49,15 +55,16 @@ export const OrderDetailsProvider = (props) => {
       newOptionCounts[optionType] = newOptionMap;
 
       setOptionCounts(newOptionCounts);
-    };
-    const resetOrder = () => {
-      setOptionCounts({
-        scoops: new Map(),
-        toppings: new Map(),
-      });
-    };
-    return [{ ...optionCounts, totals }, updateItemCount, resetOrder]; // first element will be called orderDetails by caller
-  }, [optionCounts, totals]);
+    },
+    [optionCounts]
+  );
+  const resetOrder = () => {
+    setOptionCounts({
+      scoops: new Map(),
+      toppings: new Map(),
+    });
+  };
+  const value = [{ ...optionCounts, totals }, updateItemCount, resetOrder]; // first element will be called orderDetails by caller
 
   return <OrderDetails.Provider value={value} {...props} />;
 };
