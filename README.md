@@ -21,7 +21,7 @@ You will also see any lint errors in the console.
 
 Note:
 Besides tests, if you are also interested in how this app works on browser, you will need to have this app point to a backend server located on Heroku, by replacing the current backend url in the code with the heroku's like this:
-**<http://localhost:3030>** -> **<https://guarded-hamlet-40883.herokuapp.com>**
+**<http://localhost:3030>** -> **<https://testing-react-yasuhiro.herokuapp.com>**
 
 #### `yarn test`
 

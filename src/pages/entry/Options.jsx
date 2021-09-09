@@ -14,7 +14,7 @@ const Options = ({ optionType }) => {
   const [orderDetails, updateItemCount] = useOrderDetails();
   useEffect(() => {
     axios
-      // .get(`https://guarded-hamlet-40883.herokuapp.com/${optionType}`) // Heroku production
+      // .get(`https://testing-react-yasuhiro.herokuapp.com/${optionType}`) // Heroku production
       // .get(`https://localhost:5000/${optionType}`) // Heroku local "heroku local web"
       .get(`http://localhost:3030/${optionType}`) // self local "yarn start"
       .then((res) => setItems(res.data))
