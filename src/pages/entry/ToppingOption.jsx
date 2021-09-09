@@ -9,7 +9,9 @@ const ToppingOption = ({ name, imagePath, updateItemCount }) => {
   return (
     <Col xs={6} sm={4} md={3} lg={2} style={{ textAlign: 'center' }}>
       <img
-        src={`http://localhost:3030${imagePath}`}
+        // src={`https://guarded-hamlet-40883.herokuapp.com${imagePath}`} // Heroku production
+        // src={`https://localhost:5000/${imagePath}`} // Heroku local "heroku local web"
+        src={`http://localhost:3030${imagePath}`} // self local "yarn start"
         alt={`${name} topping`}
         style={{ width: '75%' }}
       />

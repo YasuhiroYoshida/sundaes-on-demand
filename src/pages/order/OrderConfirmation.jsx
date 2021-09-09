@@ -13,7 +13,9 @@ const OrderConfirmation = ({ setOrderPhase }) => {
   useEffect(() => {
     setError(null);
     axios
-      .post('http://localhost:3030/order')
+      // .post('https://guarded-hamlet-40883.herokuapp.com/order') // Heroku production
+      // .post('https://localhost:5000/order') // Heroku local "heroku local web"
+      .post('http://localhost:3030/order') // self local "yarn start"
       .then((res) => {
         setOrderNumber(res.data.orderNumber);
       })

@@ -23,7 +23,9 @@ const ScoopOption = ({ name, imagePath, updateItemCount }) => {
   return (
     <Col xs={12} sm={6} md={4} lg={3} style={{ textAlign: 'center' }}>
       <img
-        src={`http://localhost:3030${imagePath}`}
+        // src={`https://guarded-hamlet-40883.herokuapp.com${imagePath}`} // Heroku production
+        // src={`https://localhost:5000/${imagePath}`} // Heroku local "heroku local web"
+        src={`http://localhost:3030${imagePath}`} // self local "yarn start"
         alt={`${name} scoop`}
         style={{ width: '75%' }}
       />
