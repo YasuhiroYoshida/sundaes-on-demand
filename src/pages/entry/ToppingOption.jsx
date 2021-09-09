@@ -13,10 +13,7 @@ const ToppingOption = ({ name, imagePath, updateItemCount }) => {
         alt={`${name} topping`}
         style={{ width: '75%' }}
       />
-      <Form.Group
-        controlId={`${name}-topping-checkbox`}
-        className="d-flex justify-content-center"
-      >
+      <Form.Group controlId={`${name}-topping-checkbox`}>
         <Form.Check
           type="checkbox"
           onChange={changeHandler}
