@@ -24,8 +24,13 @@ const OrderEntry = ({ setOrderPhase }) => {
       <h1>Design Your Sundae!</h1>
       <Options optionType="scoops" />
       <Options optionType="toppings" />
-      <h2>Grand total: {orderDetails.totals.grandTotal}</h2>
-      <Button variant="primary" onClick={handleClick} disabled={disabled}>
+      <h2 className="mt-4">Grand total: {orderDetails.totals.grandTotal}</h2>
+      <Button
+        className="mt-2 md-4"
+        variant="primary"
+        onClick={handleClick}
+        disabled={disabled}
+      >
         Order sundae
       </Button>
     </div>
