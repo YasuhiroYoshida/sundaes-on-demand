@@ -41,9 +41,13 @@ export const OrderDetailsProvider = (props) => {
 
   const value = useMemo(() => {
     const updateItemCount = (itemName, itemCount, optionType) => {
+      const { [optionType]: prevOptionMap } = optionCounts;
+      const newOptionMap = new Map(prevOptionMap);
+      newOptionMap.set(itemName, parseInt(itemCount));
+
       const newOptionCounts = { ...optionCounts };
-      const optionCountsMap = optionCounts[optionType];
-      optionCountsMap.set(itemName, parseInt(itemCount));
+      newOptionCounts[optionType] = newOptionMap;
+
       setOptionCounts(newOptionCounts);
     };
     const resetOrder = () => {
